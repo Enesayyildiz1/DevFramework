@@ -6,8 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DevFramework.Core.Aspects.PostSharp;
+using DevFramework.Core.Aspects.PostSharp.ValidationAspects;
 using System.Threading.Tasks;
+using DevFramework.Core.Aspects.PostSharp.TransactionAspects;
+using DevFramework.Core.Aspects.PostSharp.CacheAspects;
+using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
+using DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using DevFramework.Core.Aspects.PostSharp.LogAspects;
 
 namespace DevFramework.Northwind.Business.Concrete
 {
@@ -20,10 +25,14 @@ namespace DevFramework.Northwind.Business.Concrete
             _productDal = productDal;
         }
         [FluentValidationAspect(typeof(ProductValidator))]
-        public Product Add(Product product)
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public Product Add(Product product) 
         {
             return _productDal.Add(product);
         }
+        [CacheAspect(typeof(MemoryCacheManager),60)]
+        [LogAspect(typeof(DatabaseLogger))]
+        [LogAspect(typeof(FileLogger))]
 
         public List<Product> GetAll()
         {
@@ -33,6 +42,13 @@ namespace DevFramework.Northwind.Business.Concrete
         public Product GetById(int id)
         {
             return _productDal.Get(p => p.ProductID == id);
+        }
+        [TransactionScopeAspect]
+
+        public void TransactionalOperation(Product product1, Product product2)
+        {
+            _productDal.Add(product1);
+            _productDal.Update(product2);
         }
 
         public Product Update(Product product)

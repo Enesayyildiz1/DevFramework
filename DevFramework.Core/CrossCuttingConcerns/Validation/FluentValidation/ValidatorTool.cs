@@ -11,7 +11,8 @@ namespace DevFramework.Core.CrossCuttingConcerns.Validation.FluentValidation
     {
         public static void FluentValidation(IValidator validator, object entity)
         {
-            var result = validator.Validate((IValidationContext)entity);
+            var context = new ValidationContext<object>(entity);
+            var result = validator.Validate(entity);
             if (result.Errors.Count > 0)
             {
                 throw new ValidationException(result.Errors);

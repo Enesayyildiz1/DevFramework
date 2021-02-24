@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFramework.Core.Aspects.PostSharp
+namespace DevFramework.Core.Aspects.PostSharp.ValidationAspects
 {
     [Serializable]
     public class FluentValidationAspect:OnMethodBoundaryAspect
@@ -21,7 +21,7 @@ namespace DevFramework.Core.Aspects.PostSharp
         public override void OnEntry(MethodExecutionArgs args)
         {
             var validator = (IValidator)Activator.CreateInstance(_validatorType);
-            var entityType = _validatorType.BaseType.GetGenericArguments().FirstOrDefault();
+            var entityType = _validatorType.BaseType.GetGenericArguments()[0];
             var entities = args.Arguments.Where(t => t.GetType() == entityType);
             foreach (var entity in entities)
             {
