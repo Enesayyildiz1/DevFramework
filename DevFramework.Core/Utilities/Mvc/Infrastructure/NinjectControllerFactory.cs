@@ -10,7 +10,7 @@ using System.Web.Routing;
 
 namespace DevFramework.Core.Utilities.Mvc.Infrastructure
 {
-    class NinjectControllerFactory : DefaultControllerFactory
+  public   class NinjectControllerFactory : DefaultControllerFactory
     {
         IKernel _kernel;
         public NinjectControllerFactory(INinjectModule module)

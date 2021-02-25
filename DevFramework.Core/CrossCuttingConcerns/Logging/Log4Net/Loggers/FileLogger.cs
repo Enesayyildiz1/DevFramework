@@ -10,7 +10,7 @@ namespace DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers
 {
     public class FileLogger:LoggerService
     {
-        public FileLogger() : base(LogManager.GetLogger("DatabaseLogger"))
+        public FileLogger() : base(LogManager.GetLogger("FileLogger"))
         {
 
         }

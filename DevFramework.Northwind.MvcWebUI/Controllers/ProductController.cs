@@ -1,4 +1,7 @@
 ﻿using DevFramework.Northwind.Business.Abstract;
+using DevFramework.Northwind.Business.Concrete;
+using DevFramework.Northwind.DataAccess.Concrete.EfProductDal;
+using DevFramework.Northwind.Entities.Concrete;
 using DevFramework.Northwind.MvcWebUI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,12 +14,7 @@ namespace DevFramework.Northwind.MvcWebUI.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        private IProductService _productService;
-
-        public ProductController(IProductService productService)
-        {
-            _productService = productService;
-        }
+        ProductManager _productService = new ProductManager(new ProductDal());
 
         public ActionResult Index()
         {
@@ -25,6 +23,18 @@ namespace DevFramework.Northwind.MvcWebUI.Controllers
                 Products = _productService.GetAll()
             };
             return View(model);
+        }
+        public string Add()
+        {
+            var product = new Product()
+            {
+                CategoryId=1,
+                ProductName="Klavye",
+                QuantityPerUnit="5",
+                UnitPrice=59
+            };
+            _productService.Add(product);
+            return "Added";
         }
     }
 }
