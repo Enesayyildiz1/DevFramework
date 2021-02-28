@@ -13,6 +13,9 @@ using DevFramework.Core.Aspects.PostSharp.CacheAspects;
 using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
 using DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using DevFramework.Core.Aspects.PostSharp.LogAspects;
+using DevFramework.Core.Aspects.PostSharp.ExceptionAspects;
+using DevFramework.Core.Aspects.PostSharp.PerformanceAspects;
+using System.Threading;
 
 namespace DevFramework.Northwind.Business.Concrete
 {
@@ -34,10 +37,12 @@ namespace DevFramework.Northwind.Business.Concrete
         [CacheAspect(typeof(MemoryCacheManager),60)]
         [LogAspect(typeof(DatabaseLogger))]
         [LogAspect(typeof(FileLogger))]
+        [PerformanceCounterAspect(2)]
 
         public List<Product> GetAll()
-        {
+        { Thread.Sleep(5000);
             return _productDal.GetList();
+           
         }
 
         public Product GetById(int id)
@@ -45,7 +50,8 @@ namespace DevFramework.Northwind.Business.Concrete
             return _productDal.Get(p => p.ProductID == id);
         }
         [TransactionScopeAspect]
-
+        [ExceptionLogAspect(typeof(DatabaseLogger))]
+        [FluentValidationAspect(typeof(ProductValidator))]
         public void TransactionalOperation(Product product1, Product product2)
         {
             _productDal.Add(product1);

@@ -15,7 +15,7 @@ namespace DevFramework.Northwind.MvcWebUI.Controllers
     {
         // GET: Product
         ProductManager _productService = new ProductManager(new ProductDal());
-
+       
         public ActionResult Index()
         {
             var model = new ProductListViewModel
@@ -35,6 +35,25 @@ namespace DevFramework.Northwind.MvcWebUI.Controllers
             };
             _productService.Add(product);
             return "Added";
+        }
+        public string AddUpdate()
+        {
+           _productService.TransactionalOperation( new Product
+            {
+                CategoryId = 1,
+                ProductName = "Bardak",
+                QuantityPerUnit = "5",
+                UnitPrice = 59
+            }, new Product
+            {
+                CategoryId = 2,
+                ProductName = "Klavye",
+                QuantityPerUnit = "5",
+                UnitPrice = 22
+            });
+            return "Done";
+          
+
         }
     }
 }
