@@ -17,6 +17,9 @@ namespace DevFramework.Northwind.Business.DependecyResolvers.Ninject
         {
             Bind<IProductService>().To<ProductManager>().InSingletonScope();
             Bind<IProductDal>().To<ProductDal>().InSingletonScope();
+            Bind<IUserService>().To<UserManager>();
+            Bind<IUserDal>().To<UserDal>();
+
         }
     }
 }

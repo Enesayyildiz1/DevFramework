@@ -18,7 +18,7 @@ namespace DevFramework.Core.Aspects.PostSharp.AuthorizationAspects
             bool isAuthorized = false;
             for (int i = 0; i < roles.Length; i++)
             {
-                if (!System.Threading.Thread.CurrentPrincipal.IsInRole(roles[i]))
+                if (System.Threading.Thread.CurrentPrincipal.IsInRole(roles[i]))
                 {
                     isAuthorized = true;
                 }

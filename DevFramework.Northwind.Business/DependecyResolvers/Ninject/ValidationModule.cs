@@ -1,4 +1,6 @@
-﻿using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
+﻿using DevFramework.Northwind.Business.Abstract;
+using DevFramework.Northwind.Business.Concrete;
+using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using DevFramework.Northwind.Entities.Concrete;
 using FluentValidation;
 using Ninject.Modules;
@@ -15,6 +17,7 @@ namespace DevFramework.Northwind.Business.DependecyResolvers.Ninject
         public override void Load()
         {
             Bind<IValidator<Product>>().To<ProductValidator>().InSingletonScope();
+           
         }
     }
 }

@@ -35,13 +35,13 @@ namespace DevFramework.Northwind.Business.Concrete
         {
             return _productDal.Add(product);
         }
-        [CacheAspect(typeof(MemoryCacheManager),60)]
-        [LogAspect(typeof(DatabaseLogger))]
-        [LogAspect(typeof(FileLogger))]
-        [PerformanceCounterAspect(2)]
+       // [CacheAspect(typeof(MemoryCacheManager),60)]
+        //[LogAspect(typeof(DatabaseLogger))]
+        //[LogAspect(typeof(FileLogger))]
+        //[PerformanceCounterAspect(2)]
         [SecuredOperation(Roles ="Admin,Editor")]
         public List<Product> GetAll()
-        { Thread.Sleep(5000);
+        {
             return _productDal.GetList();
            
         }
