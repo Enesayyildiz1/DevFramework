@@ -39,7 +39,7 @@ namespace DevFramework.Northwind.Business.Concrete
         //[LogAspect(typeof(DatabaseLogger))]
         //[LogAspect(typeof(FileLogger))]
         //[PerformanceCounterAspect(2)]
-        [SecuredOperation(Roles ="Admin,Editor")]
+       // [SecuredOperation(Roles ="Admin,Editor")]
         public List<Product> GetAll()
         {
             return _productDal.GetList();
